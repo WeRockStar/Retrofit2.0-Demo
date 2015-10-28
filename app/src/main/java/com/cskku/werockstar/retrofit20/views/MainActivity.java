@@ -62,26 +62,34 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Github>() {
             @Override
             public void onResponse(Response<Github> response, Retrofit retrofit) {
-                if (response != null) {
+                if (response.body() != null) {
                     List<Github> list = new ArrayList<Github>();
                     list.add(response.body());
                     GithubAdapter adapter = new GithubAdapter(list);
                     mList.setAdapter(adapter);
-                } else {
-                    Snackbar.make(rootLayout, "Not connect", Snackbar.LENGTH_LONG)
+                }else {
+                    Snackbar.make(rootLayout, "Service null", Snackbar.LENGTH_LONG)
                             .setAction("Retry", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     loadService(user);
                                 }
-                            }).setActionTextColor(Color.BLUE)
+                            }).setActionTextColor(Color.GRAY)
                             .show();
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-
+                Log.e("ERROR", t.getMessage());
+                Snackbar.make(rootLayout, "Not connect", Snackbar.LENGTH_LONG)
+                        .setAction("Retry", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                loadService(user);
+                            }
+                        }).setActionTextColor(Color.WHITE)
+                        .show();
             }
         });
 

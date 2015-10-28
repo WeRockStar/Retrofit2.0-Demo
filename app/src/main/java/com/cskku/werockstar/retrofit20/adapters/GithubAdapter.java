@@ -34,9 +34,15 @@ public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubView
     public void onBindViewHolder(GithubViewHolder holder, int position) {
         Github github = githubList.get(position);
 
-        Glide.with(holder.mImgUser.getContext()).load(github.getImage()).into(holder.mImgUser);
+        Glide.with(holder.mImgUser.getContext())
+                .load(github.getImage())
+                .placeholder(R.mipmap.ic_account_circle_black_24dp)
+                .crossFade()
+                .into(holder.mImgUser);
+
         holder.txtFullname.setText(github.getName());
         holder.txtLocation.setText(github.getLocation());
+        holder.txtCompany.setText(github.getCompany());
 
     }
 
@@ -50,6 +56,7 @@ public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubView
         private ImageView mImgUser;
         private TextView txtFullname;
         private TextView txtLocation;
+        private TextView txtCompany;
 
         public GithubViewHolder(View itemView) {
             super(itemView);
@@ -57,6 +64,7 @@ public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubView
             mImgUser = (ImageView) itemView.findViewById(R.id.imgUser);
             txtFullname = (TextView) itemView.findViewById(R.id.fullname);
             txtLocation = (TextView) itemView.findViewById(R.id.location);
+            txtCompany = (TextView) itemView.findViewById(R.id.compary);
         }
     }
 }
