@@ -1,5 +1,6 @@
 package com.cskku.werockstar.retrofit20.views;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mUsername;
     private Button mSearch;
     private RelativeLayout rootLayout;
+    private ProgressDialog dialog;
 
     private String BASE_URL = "https://api.github.com";
 
@@ -50,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadService(final String user) {
-        OkHttpClient client = new OkHttpClient();
+
+        dialog = new ProgressDialog(MainActivity.this);
+        dialog.setMessage("Loading...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -63,11 +70,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<Github> response, Retrofit retrofit) {
                 if (response.body() != null) {
+                    dialog.cancel();
+
                     List<Github> list = new ArrayList<Github>();
                     list.add(response.body());
                     GithubAdapter adapter = new GithubAdapter(list);
                     mList.setAdapter(adapter);
-                }else {
+                } else {
+                    dialog.cancel();
                     Snackbar.make(rootLayout, "Service null", Snackbar.LENGTH_LONG)
                             .setAction("Retry", new View.OnClickListener() {
                                 @Override
@@ -81,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable t) {
+                dialog.cancel();
                 Log.e("ERROR", t.getMessage());
                 Snackbar.make(rootLayout, "Not connect", Snackbar.LENGTH_LONG)
                         .setAction("Retry", new View.OnClickListener() {
