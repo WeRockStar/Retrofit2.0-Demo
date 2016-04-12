@@ -18,17 +18,16 @@ import com.cskku.werockstar.retrofit20.R;
 import com.cskku.werockstar.retrofit20.adapters.GithubAdapter;
 import com.cskku.werockstar.retrofit20.models.Github;
 import com.cskku.werockstar.retrofit20.services.GithubService;
-import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Call<Github> call = service.getUserInfo(user);
         call.enqueue(new Callback<Github>() {
             @Override
-            public void onResponse(Response<Github> response, Retrofit retrofit) {
+            public void onResponse(Call<Github> call, Response<Github> response) {
                 if (response.body() != null) {
                     dialog.cancel();
 
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Github> call, Throwable t) {
                 dialog.cancel();
                 Log.e("ERROR", t.getMessage());
                 Snackbar.make(rootLayout, "Not connect", Snackbar.LENGTH_LONG)
