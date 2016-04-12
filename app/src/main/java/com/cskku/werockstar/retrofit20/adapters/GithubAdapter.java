@@ -13,9 +13,6 @@ import com.cskku.werockstar.retrofit20.models.Github;
 
 import java.util.List;
 
-/**
- * Created by Kotchaphan on 29/10/2558.
- */
 public class GithubAdapter extends RecyclerView.Adapter<GithubAdapter.GithubViewHolder> {
 
     List<Github> githubList;

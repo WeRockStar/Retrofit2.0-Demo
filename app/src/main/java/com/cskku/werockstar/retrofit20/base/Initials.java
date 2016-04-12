@@ -6,9 +6,6 @@ import com.cskku.werockstar.retrofit20.R;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-/**
- * Created by Kotchaphan on 29/10/2558.
- */
 public class Initials extends Application {
     @Override
     public void onCreate() {

@@ -2,9 +2,6 @@ package com.cskku.werockstar.retrofit20.models;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Kotchaphan on 29/10/2558.
- */
 public class Github {
     @SerializedName("name")
     private String name;
